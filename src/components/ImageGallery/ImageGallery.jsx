@@ -46,6 +46,7 @@ export const ImageGallery = ({ query, handleOpenModal }) => {
   // }
 
   const handleLoader = () => {
+    console.log(handleLoader());
     SearchApi(query, page)
       .then(res => {
         const { hits } = res.data;
