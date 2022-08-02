@@ -1,21 +1,20 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+// import { Component } from 'react';
+import { useState } from 'react';
 // import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import styles from './Searchbar.module.css';
 // import { toast } from 'react-toastify';
 // Компонент принимает один проп onSubmit - функцию для передачи значения инпута при сабмите формы.
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const handleNameChange = event => {
+    setQuery(event.currentTarget.value);
   };
 
-  handleNameChange = event => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  handleSubmit = event => {
-    const { query } = this.state;
+  const handleSubmit = event => {
+    // const { query } = state;
     event.preventDefault();
 
     if (query.trim() === '') {
@@ -23,33 +22,31 @@ export class Searchbar extends Component {
       return;
     }
 
-    this.props.onSubmit(query);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
   };
 
-  render() {
-    const { query } = this.state;
-    return (
-      <header className={styles.Searchbar}>
-        <form className={styles.SearchForm} onSubmit={this.handleSubmit}>
-          <button type="submit" className={styles.SearchFormButton}>
-            <span className={styles.ButtonLabel}>Search</span>
-          </button>
+  // const { query } = state;
+  return (
+    <header className={styles.Searchbar}>
+      <form className={styles.SearchForm} onSubmit={handleSubmit}>
+        <button type="submit" className={styles.SearchFormButton}>
+          <span className={styles.ButtonLabel}>Search</span>
+        </button>
 
-          <input
-            className={styles.SearchFormInput}
-            type="text"
-            autocomplete="off"
-            autoFocus
-            name="query"
-            value={query}
-            onChange={this.handleNameChange}
-          />
-        </form>
-      </header>
-    );
-  }
-}
+        <input
+          className={styles.SearchFormInput}
+          type="text"
+          autocomplete="off"
+          autoFocus
+          name="query"
+          value={query}
+          onChange={handleNameChange}
+        />
+      </form>
+    </header>
+  );
+};
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,

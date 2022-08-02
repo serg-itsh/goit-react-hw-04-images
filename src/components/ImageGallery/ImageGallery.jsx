@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 // import { Component } from 'react';
 import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
-import SearchApi from 'components/Searchbar/SearchApi';
+import SearchApi from 'SearchApi';
 import { Button } from 'components/Button/Button';
 import styles from './ImageGallery.module.css';
 import { Loader } from '../Loader/Loader';
@@ -46,7 +46,7 @@ export const ImageGallery = ({ query, handleOpenModal }) => {
   // }
 
   const handleLoader = () => {
-    console.log(handleLoader());
+    // console.log(handleLoader());
     SearchApi(query, page)
       .then(res => {
         const { hits } = res.data;

@@ -1,5 +1,7 @@
-import { Component } from 'react';
+// import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
+import { useState } from 'react';
+
 // import { SearchInfo } from './Searchbar/SearchInfo';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './Modal/Modal';
@@ -15,44 +17,40 @@ import { Modal } from './Modal/Modal';
 // webformatURL - ссылка на маленькое изображение для списка карточек
 // largeImageURL - ссылка на большое изображение для модального окна
 
-export class App extends Component {
-  state = {
-    image: '',
-    query: '',
+export const App = () => {
+  const [image, setImage] = useState('');
+  const [query, setQuery] = useState('');
+
+  const handleSearchFormSubmit = query => {
+    setQuery(query);
   };
 
-  handleSearchFormSubmit = query => {
-    this.setState({ query });
+  const handleOpenModal = img => {
+    setImage(img);
   };
 
-  handleOpenModal = img => {
-    this.setState({ image: img });
+  const handleCloseModal = () => {
+    setImage('');
   };
 
-  handleCloseModal = () => {
-    this.setState({ image: '' });
-  };
-
-  render() {
-    const { image, query } = this.state;
-    return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr0',
-          gridGap: '16px',
-          paddingBottom: '24px',
-        }}
-      >
-        <div>
-          <Searchbar onSubmit={this.handleSearchFormSubmit} />
-          <ImageGallery query={query} handleOpenModal={this.handleOpenModal} />
-          {image && <Modal image={image} onClose={this.handleCloseModal} />}
-        </div>
+  // const { image, query } = this.state;
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr0',
+        gridGap: '16px',
+        paddingBottom: '24px',
+      }}
+    >
+      <div>
+        <Searchbar onSubmit={handleSearchFormSubmit} />
+        <ImageGallery query={query} handleOpenModal={handleOpenModal} />
+        {image && <Modal image={image} onClose={handleCloseModal} />}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 // export class App extends Component {
 //   state = {
